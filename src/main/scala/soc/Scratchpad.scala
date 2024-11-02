@@ -53,6 +53,18 @@ trait CanHaveBankedScratchpad { this: BaseSubsystem =>
         bus.beatBytes,
         device,
         params.buffer))
+      println(s"Bank $b:")
+      println(s"  Base address: ${params.base + bankStripe * b}")
+      println(s"  Size: ${params.size}")
+      println(s"  Mask: $mask")
+      println(s"  Bank stripe: $bankStripe")
+      println(s"  Sub-banks: ${params.subBanks}")
+      println(s"  Buffer params: ${params.buffer}")
+      println(s"  Outer buffer params: ${params.outerBuffer}")
+      println(s"\nBus info:")
+      println(s"  Bus location: ${params.busWhere}")
+      println(s"  Beat bytes: ${bus.beatBytes}")
+      println(s"  Clock domain: ${bus.fixedClockNode}")
       bank.clockNode := bus.fixedClockNode
       bus.coupleTo(s"$name-$si-$b") { bank.xbar := bus { TLBuffer(params.outerBuffer) } := _ }
     }
